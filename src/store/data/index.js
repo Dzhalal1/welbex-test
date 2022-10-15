@@ -1,11 +1,12 @@
+function formatDate(str) {
+    return str.split('-').reverse().join('.')
+}
+
 const state = () => ({})
 
 // getters
 const getters = {}
 
-function formatDate(str) {
-    return str.split('-').reverse().join('.')
-}
 
 // actions
 const actions = {
@@ -13,21 +14,21 @@ const actions = {
         return [
             {
                 date: '2022-10-15',
-                title: '',
-                count: 0,
-                distance: 0,
+                title: 'blue',
+                count: 5,
+                distance: 25,
             },
             {
                 date: '2022-10-15',
-                title: '',
-                count: 0,
-                distance: 0,
+                title: 'red',
+                count: 4,
+                distance: 32,
             },
             {
                 date: '2022-10-15',
-                title: '',
-                count: 0,
-                distance: 0,
+                title: 'green',
+                count: 5,
+                distance: 87,
             },
         ].map((item) => {
             return {

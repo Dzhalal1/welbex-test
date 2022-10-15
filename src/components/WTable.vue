@@ -1,13 +1,23 @@
 <template>
   <div class="w_table_main">
+    <input type="text" id="table-search" class="w_input" placeholder="Search for items">
     <table class="w_table table-auto whitespace-no-wrap table-striped">
       <thead class="w_head">
       <tr class="text-left">
-        <th v-for="col in header" :key="col.value">{{ col.title }}</th>
+        <th @click="setSort(col)" v-for="col in header" :key="col.value">
+          <div class="flex items-center group" :class="{'cursor-pointer': col.sorted}">
+            <span>{{ col.title }}</span>
+            <svg v-if="col.sorted" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" :class="{'rotate-180': sortedColum === col.value && sortDirection === -1,'opacity-100 group-hover:opacity-100': sortedColum === col.value}"
+                 class="w-8 h-8 transition-transform opacity-0 group-hover:opacity-50">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
+            </svg>
+          </div>
+        </th>
       </tr>
       </thead>
       <tbody>
-      <tr class="w_body_tr" v-for="(row,index) in body" :key="index">
+      <tr class="w_body_tr" v-for="(row,index) in sortedBody" :key="index">
         <td v-for="col in header" :key="col.value">{{ row[col.value] }}</td>
       </tr>
       </tbody>
@@ -18,9 +28,42 @@
 <script>
 export default {
   name: "WTable",
+  data() {
+    return {
+      sortedColum: null,
+      sortDirection: 1,
+    }
+  },
   props: {
     body: Array,
     header: Array,
+  },
+  computed: {
+    sortedBody() {
+      if (this.sortedColum) {
+        return [...this.body].sort((prev, next) => {
+          if (prev[this.sortedColum] > next[this.sortedColum]) {
+            return 1 * this.sortDirection
+          }
+          if (prev[this.sortedColum] < next[this.sortedColum]) {
+            return -1 * this.sortDirection
+          }
+          return 0
+        })
+      }
+      return this.body
+    }
+  },
+  methods: {
+    setSort(colum) {
+      if(!colum.sorted) {
+        return
+      }
+      if (this.sortedColum === colum.value) {
+        this.sortDirection *= -1
+      }
+      this.sortedColum = colum.value
+    }
   }
 }
 </script>

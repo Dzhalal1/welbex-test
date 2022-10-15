@@ -16,9 +16,9 @@ export default {
       table: [],
       header: [
         {title: 'Дата', value: 'date'},
-        {title: 'Название', value: 'title'},
-        {title: 'Количество', value: 'count'},
-        {title: 'Расстояние', value: 'distance'},
+        {title: 'Название', value: 'title', sorted: true},
+        {title: 'Количество', value: 'count', sorted: true},
+        {title: 'Расстояние', value: 'distance', sorted: true},
       ]
     }
   },
