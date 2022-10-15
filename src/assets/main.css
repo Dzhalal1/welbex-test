@@ -6,3 +6,19 @@
     padding: 10px;
     font-family: "Consolas", sans-serif;
 }
+
+.w_table_main {
+    @apply overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative p-0;
+}
+
+.w_table {
+    @apply border-collapse bg-white w-full relative;
+}
+
+.w_head {
+    @apply text-sm text-gray-700 bg-gray-100;
+}
+
+.w_body_tr {
+    @apply text-left bg-white border-t hover:bg-gray-50;
+}
