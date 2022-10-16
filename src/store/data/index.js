@@ -13,13 +13,13 @@ const actions = {
     async getTable() {
         return [
             {
-                date: '2022-10-15',
+                date: '2022-10-11',
                 title: 'blue',
                 count: 5,
                 distance: 25,
             },
             {
-                date: '2022-10-15',
+                date: '2022-10-12',
                 title: 'red',
                 count: 4,
                 distance: 32,
