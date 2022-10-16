@@ -8,8 +8,10 @@
           <div class="flex items-center group" :class="{'cursor-pointer': col.sorted}">
             <span>{{ col.title }}</span>
             <svg v-if="col.sorted" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                 stroke="currentColor" :class="{'rotate-180': sortedColum === col.value && sortDirection === -1,'opacity-100 group-hover:opacity-100': sortedColum === col.value}"
-                 class="w-8 h-8 transition-transform opacity-0 group-hover:opacity-50">
+                 stroke="currentColor"
+                 class="w-8 h-8 transition-transform"
+                 :class="{'rotate-180': sortedColum === col.value && sortDirection === -1, ' opacity-0 group-hover:opacity-50': sortedColum !== col.value,'opacity-100 group-hover:opacity-100': sortedColum === col.value}"
+            >
               <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
             </svg>
           </div>
@@ -56,7 +58,7 @@ export default {
   },
   methods: {
     setSort(colum) {
-      if(!colum.sorted) {
+      if (!colum.sorted) {
         return
       }
       if (this.sortedColum === colum.value) {
