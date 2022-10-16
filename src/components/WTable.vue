@@ -2,6 +2,7 @@
   <div class="w_table_main">
     <div class="flex justify-between">
       <select v-model="filterColum">
+        <option value="" disabled selected>Выбрать столбец</option>
         <option v-for="option in header"
                 :key="option.value"
                 :value="option.value"
@@ -9,6 +10,7 @@
         </option>
       </select>
       <select v-model="filterCondition">
+        <option value="" disabled selected>Выбрать условие</option>
         <option v-for="option in conditions"
                 :key="option.value"
                 :value="option.value"
@@ -65,8 +67,8 @@ export default {
         {title: 'Равно', value: 3, func: (obj) => obj[this.filterColum] === this.filterValue},
         {title: 'Содержит', value: 4, func: (obj) => `${obj[this.filterColum]}`.includes(this.filterValue)}
       ],
-      filterColum: null,
-      filterCondition: null,
+      filterColum: '',
+      filterCondition: '',
       filterValue: null,
     }
   },
