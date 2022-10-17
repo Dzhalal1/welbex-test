@@ -7,9 +7,9 @@ const getters = {}
 
 // actions
 const actions = {
-    async getTable(ctx, pagination) {
-        return new ApiService().getData(pagination)
-    }
+    async getTable(ctx, {pagination, filter, sortProps}) {
+        return new ApiService().getData(pagination, filter, sortProps)
+    },
 }
 
 // mutations

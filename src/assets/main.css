@@ -22,9 +22,27 @@
 .w_body_tr {
     @apply text-left bg-white border-t hover:bg-gray-50 text-base;
 }
+
 .w_input {
     @apply m-2 bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:outline-0 focus:ring-blue-500 focus:ring-2 focus:border-blue-500 block w-64 pl-6 p-2;
 }
+
 select {
     @apply bg-gray-50 m-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-0 focus:ring-blue-500 focus:border-blue-500 focus:ring-2 block w-full p-2.5;
+}
+
+.w_pagination_wrapper {
+    @apply flex items-center justify-between border-gray-200 bg-white px-4 mx-auto py-3 sm:px-6;
+}
+
+.w_pag_mobile {
+    @apply flex flex-1 justify-between sm:hidden;
+}
+
+.w_button.active {
+    @apply bg-blue-400 text-white;
+}
+
+.w_button {
+    @apply text-sm px-4 py-2 font-bold text-gray-500 bg-gray-100 rounded-md hover:bg-blue-400 hover:text-white transition-colors duration-500 disabled:text-gray-500 disabled:bg-gray-300;
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="w_table_main">
-    <div class="flex justify-between">
-      <select v-model="filterColum">
+    <div class="flex justify-between items-center">
+      <select v-model="filterColumn">
         <option value="" disabled selected>Выбрать столбец</option>
         <option v-for="option in header"
                 :key="option.value"
@@ -22,6 +22,11 @@
           type="text" id="table-search"
           class="w_input"
           placeholder="Search for items">
+      <button class="w_button"
+              type="button"
+              @click="filterSubmit"
+      >Поиск
+      </button>
     </div>
     <table class="w_table table-auto whitespace-no-wrap table-striped">
       <thead class="w_head">
@@ -37,7 +42,7 @@
             <svg v-if="col.sorted" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                  stroke="currentColor"
                  class="w-8 h-8 transition-transform"
-                 :class="{'rotate-180': sortedColum === col.value && sortDirection === -1, ' opacity-0 group-hover:opacity-50': sortedColum !== col.value,'opacity-100 group-hover:opacity-100': sortedColum === col.value}"
+                 :class="{'rotate-180': sortedColumn === col.value && sortDirection === -1, ' opacity-0 group-hover:opacity-50': sortedColumn !== col.value,'opacity-100 group-hover:opacity-100': sortedColumn === col.value}"
             >
               <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
             </svg>
@@ -46,7 +51,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr class="w_body_tr" v-for="(row,index) in filterBody" :key="index">
+      <tr class="w_body_tr" v-for="(row,index) in body" :key="index">
         <td v-for="col in header" :key="col.value">{{ row[col.value] }}</td>
       </tr>
       </tbody>
@@ -59,15 +64,15 @@ export default {
   name: "WTable",
   data() {
     return {
-      sortedColum: null,
+      sortedColumn: null,
       sortDirection: 1,
       conditions: [
-        {title: 'Больше', value: 1, func: (obj) => obj[this.filterColum] > this.filterValue},
-        {title: 'Меньше', value: 2, func: (obj) => obj[this.filterColum] < this.filterValue},
-        {title: 'Равно', value: 3, func: (obj) => obj[this.filterColum] === this.filterValue},
-        {title: 'Содержит', value: 4, func: (obj) => `${obj[this.filterColum]}`.includes(this.filterValue)}
+        {title: 'Больше', value: 1},
+        {title: 'Меньше', value: 2},
+        {title: 'Равно', value: 3},
+        {title: 'Содержит', value: 4},
       ],
-      filterColum: '',
+      filterColumn: '',
       filterCondition: '',
       filterValue: null,
     }
@@ -76,39 +81,20 @@ export default {
     body: Array,
     header: Array,
   },
-  computed: {
-    sortedBody() {
-      if (this.sortedColum) {
-        return [...this.body].sort((prev, next) => {
-          if (prev[this.sortedColum] > next[this.sortedColum]) {
-            return 1 * this.sortDirection
-          }
-          if (prev[this.sortedColum] < next[this.sortedColum]) {
-            return -1 * this.sortDirection
-          }
-          return 0
-        })
-      }
-      return this.body
-    },
-    filterBody() {
-      if (!this.filterColum || !this.filterValue || !this.filterCondition) {
-        return this.sortedBody
-      }
-      const condition = this.conditions.find(obj => obj.value === this.filterCondition)
-      return this.sortedBody.filter(condition.func)
-    }
-  },
   methods: {
     setSort(colum) {
       if (!colum.sorted) {
         return
       }
-      if (this.sortedColum === colum.value) {
+      if (this.sortedColumn === colum.value) {
         this.sortDirection *= -1
       }
-      this.sortedColum = colum.value
+      this.sortedColumn = colum.value
+      this.$emit('sort-submit', {column: this.sortedColumn, direction: this.sortDirection})
     },
+    filterSubmit() {
+      this.$emit('filter-submit', {column: this.filterColumn, condition: this.filterCondition, value: this.filterValue})
+    }
   }
 }
 </script>
